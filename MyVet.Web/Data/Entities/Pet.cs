@@ -21,12 +21,10 @@ namespace MyVet.Web.Data.Entities
 
         [Display(Name = "Born")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
-        [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Born { get; set; }
 
         public string Remarks { get; set; }
-
 
         //TODO: replace the correct URL for the image
         public string ImageFullPath => string.IsNullOrEmpty(ImageUrl)
@@ -34,7 +32,7 @@ namespace MyVet.Web.Data.Entities
             : $"https://TBD.azurewebsites.net{ImageUrl.Substring(1)}";
 
         [Display(Name = "Born")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime BornLocal => Born.ToLocalTime();
 
         public PetType PetType { get; set; }

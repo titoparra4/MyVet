@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyVet.Web.Helpers;
-using MyVet.Web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using MyVet.Web.Helpers;
+using MyVet.Web.Models;
 
 namespace MyVet.Web.Controllers
 {
@@ -16,7 +16,6 @@ namespace MyVet.Web.Controllers
         {
             _userHelper = userHelper;
         }
-
 
         [HttpGet]
         public IActionResult Login()
@@ -30,21 +29,21 @@ namespace MyVet.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _userHelper.LoginAsync(model);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
-                    if(Request.Query.Keys.Contains("ReturnUrl"))
+                    if (Request.Query.Keys.Contains("ReturnUrl"))
                     {
                         return Redirect(Request.Query["ReturnUrl"].First());
                     }
 
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError(string.Empty, "Failed to login.");
+
+                ModelState.AddModelError(string.Empty, "User or password not valid.");
                 model.Password = string.Empty;
             }
 
             return View(model);
-
         }
 
         [HttpGet]

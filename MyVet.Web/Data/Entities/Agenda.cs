@@ -18,8 +18,8 @@ namespace MyVet.Web.Data.Entities
         [Display(Name = "Is Available?")]
         public bool IsAvailable { get; set; }
 
-        [Display(Name = "Date*")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm tt}")]
+        [Display(Name = "Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd H:mm tt}")]
         public DateTime DateLocal => Date.ToLocalTime();
 
         public Owner Owner { get; set; }
@@ -27,4 +27,3 @@ namespace MyVet.Web.Data.Entities
         public Pet Pet { get; set; }
     }
 }
-

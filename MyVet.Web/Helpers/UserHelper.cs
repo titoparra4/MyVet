@@ -66,6 +66,5 @@ namespace MyVet.Web.Helpers
         {
             await _signInManager.SignOutAsync();
         }
-
     }
 }
