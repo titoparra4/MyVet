@@ -10,22 +10,22 @@ using MyVet.Web.Data.Entities;
 
 namespace MyVet.Web.Controllers
 {
-    public class OwnersController : Controller
+    public class AgendaController : Controller
     {
         private readonly DataContext _context;
 
-        public OwnersController(DataContext context)
+        public AgendaController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Owners
+        // GET: Agenda
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Owners.ToListAsync());
+            return View(await _context.Agendas.ToListAsync());
         }
 
-        // GET: Owners/Details/5
+        // GET: Agenda/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace MyVet.Web.Controllers
                 return NotFound();
             }
 
-            var owner = await _context.Owners
+            var agenda = await _context.Agendas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (owner == null)
+            if (agenda == null)
             {
                 return NotFound();
             }
 
-            return View(owner);
+            return View(agenda);
         }
 
-        // GET: Owners/Create
+        // GET: Agenda/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Owners/Create
+        // POST: Agenda/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Owner owner)
+        public async Task<IActionResult> Create([Bind("Id,Date,Remarks,IsAvailable")] Agenda agenda)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(owner);
+                _context.Add(agenda);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(owner);
+            return View(agenda);
         }
 
-        // GET: Owners/Edit/5
+        // GET: Agenda/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace MyVet.Web.Controllers
                 return NotFound();
             }
 
-            var owner = await _context.Owners.FindAsync(id);
-            if (owner == null)
+            var agenda = await _context.Agendas.FindAsync(id);
+            if (agenda == null)
             {
                 return NotFound();
             }
-            return View(owner);
+            return View(agenda);
         }
 
-        // POST: Owners/Edit/5
+        // POST: Agenda/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Owner owner)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Remarks,IsAvailable")] Agenda agenda)
         {
-            if (id != owner.Id)
+            if (id != agenda.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace MyVet.Web.Controllers
             {
                 try
                 {
-                    _context.Update(owner);
+                    _context.Update(agenda);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OwnerExists(owner.Id))
+                    if (!AgendaExists(agenda.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace MyVet.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(owner);
+            return View(agenda);
         }
 
-        // GET: Owners/Delete/5
+        // GET: Agenda/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace MyVet.Web.Controllers
                 return NotFound();
             }
 
-            var owner = await _context.Owners
+            var agenda = await _context.Agendas
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (owner == null)
+            if (agenda == null)
             {
                 return NotFound();
             }
 
-            return View(owner);
+            return View(agenda);
         }
 
-        // POST: Owners/Delete/5
+        // POST: Agenda/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var owner = await _context.Owners.FindAsync(id);
-            _context.Owners.Remove(owner);
+            var agenda = await _context.Agendas.FindAsync(id);
+            _context.Agendas.Remove(agenda);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OwnerExists(int id)
+        private bool AgendaExists(int id)
         {
-            return _context.Owners.Any(e => e.Id == id);
+            return _context.Agendas.Any(e => e.Id == id);
         }
     }
 }
