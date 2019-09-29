@@ -248,6 +248,7 @@ namespace MyVet.Web.Controllers
                 return RedirectToAction($"Details/{model.OwnerId}");
             }
 
+            model.PetTypes = _combosHelper.GetComboPetTypes();
             return View(model);
         }
 
@@ -288,6 +289,7 @@ namespace MyVet.Web.Controllers
                 return RedirectToAction($"Details/{model.OwnerId}");
             }
 
+            model.PetTypes = _combosHelper.GetComboPetTypes();
             return View(model);
         }
     }
