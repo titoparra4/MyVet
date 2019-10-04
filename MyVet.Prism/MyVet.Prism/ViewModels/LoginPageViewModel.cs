@@ -1,4 +1,6 @@
-﻿using Prism.Commands;
+﻿using MyVet.Common.Models;
+using MyVet.Common.Services;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
@@ -9,14 +11,16 @@ namespace MyVet.Prism.ViewModels
 {
 	public class LoginPageViewModel : ViewModelBase
 	{
+        private readonly IApiService _apiService;
         private string _password;
         private bool _isRunning;
         private bool _isEnabled;
         private DelegateCommand _loginCommand;
-        public LoginPageViewModel(INavigationService navigationService) : base(navigationService)
+        public LoginPageViewModel(INavigationService navigationService, IApiService apiService) : base(navigationService)
         {
             Title = "Login";
             IsEnabled = true;
+            _apiService = apiService;
         }
 
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(Login));
@@ -53,6 +57,43 @@ namespace MyVet.Prism.ViewModels
                 await App.Current.MainPage.DisplayAlert("Error", "You must enter a password.", "Accept");
                 return;
             }
+
+            IsRunning = true;
+            IsEnabled = false;
+
+            var request = new TokenRequest
+            {
+                Password = Password,
+                Username = Email
+            };
+
+            var url = App.Current.Resources["UrlAPI"].ToString();
+            var response = await _apiService.GetTokenAsync(url, "/Account", "/CreateToken", request);
+
+            if (!response.IsSuccess)
+            {
+                IsEnabled = true;
+                IsRunning = false;
+                await App.Current.MainPage.DisplayAlert("Error", "User or password incorrect.", "Accept");
+                Password = string.Empty;
+                return;
+            }
+
+            //var token = (TokenResponse)response.Result;
+
+            //var response2 = await _apiService.GetOwnerByEmail(
+            //    url,
+            //    "/api",
+            //    "/Owners/GetOwnerByEmail",
+            //    "bearer",
+            //    token.Token,
+            //    Email);
+
+            //var owner = (OwnerResponse)response2.Result;
+
+
+            //IsRunning = false;
+            //IsEnabled = true;
 
             await App.Current.MainPage.DisplayAlert("OK", "Funciona", "Accept");
         }
