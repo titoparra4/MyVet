@@ -37,6 +37,9 @@
                 <DataTemplate>
                     <ViewCell>
                         <Grid>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectHistoryCommand}"/>
+                            </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -48,7 +51,7 @@
                             </Grid.RowDefinitions>
                             <Label
                                 Grid.Column="0"
-                                Text="{Binding DateLocal, StringFormat='{0:yyyy/MM/dd}'}"
+                                Text="{Binding DateLocal, StringFormat='{0:yyyy/MM/dd HH:ss}'}"
                                 VerticalOptions="Center"/>
                             <Label
                                 Grid.Column="1"
