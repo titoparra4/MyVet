@@ -21,5 +21,10 @@ namespace MyVet.Web.Models
         public int PetId { get; set; }
 
         public IEnumerable<SelectListItem> Pets { get; set; }
+
+        public bool IsMine { get; set; }
+
+        public string Reserved => "Reserved";
+
     }
 }
