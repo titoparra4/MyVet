@@ -31,13 +31,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li><a asp-area="" asp-controller="Owners" asp-action="Index">Owners</a></li>
                         <li><a asp-area="" asp-controller="Managers" asp-action="Index">Managers</a></li>
                         <li><a asp-area="" asp-controller="Agenda" asp-action="Index">Agenda</a></li>
+                        <li><a asp-area="" asp-controller="Pets" asp-action="Index">Pets</a></li>
                         <li><a asp-area="" asp-controller="PetTypes" asp-action="Index">Pet Types</a></li>
                         <li><a asp-area="" asp-controller="ServiceTypes" asp-action="Index">Service Types</a></li>
                     }
