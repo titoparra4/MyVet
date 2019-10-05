@@ -130,7 +130,7 @@ namespace MyVet.Web.Controllers.API
 
             _dataContext.Pets.Update(oldPet);
             await _dataContext.SaveChangesAsync();
-            return Ok(oldPet);
+            return Ok(_converterHelper.ToPetResponse(oldPet));
         }
     }
 }
