@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyVet.Common.Models;
@@ -124,6 +126,38 @@ namespace MyVet.Web.Controllers.API
                 Message = "An email with instructions to change the password was sent."
             });
         }
+
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> PutUser([FromBody] UserRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userEntity = await _userHelper.GetUserByEmailAsync(request.Email);
+            if (userEntity == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            userEntity.FirstName = request.FirstName;
+            userEntity.LastName = request.LastName;
+            userEntity.Address = request.Address;
+            userEntity.PhoneNumber = request.Phone;
+            userEntity.Document = request.Phone;
+
+            var respose = await _userHelper.UpdateUserAsync(userEntity);
+            if (!respose.Succeeded)
+            {
+                return BadRequest(respose.Errors.FirstOrDefault().Description);
+            }
+
+            var updatedUser = await _userHelper.GetUserByEmailAsync(request.Email);
+            return Ok(updatedUser);
+        }
+
 
     }
 }
