@@ -75,5 +75,82 @@ namespace MyVet.Web.Controllers.API
 
             return Ok(response);
         }
+
+        [HttpPost]
+        [Route("AssignAgenda")]
+        public async Task<IActionResult> AssignAgenda(AssignRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var agenda = await _dataContext.Agendas.FindAsync(request.AgendaId);
+            if (agenda == null)
+            {
+                return BadRequest("Agenda doesn't exists.");
+            }
+
+            if (!agenda.IsAvailable)
+            {
+                return BadRequest("Agenda is not available.");
+            }
+
+            var owner = await _dataContext.Owners.FindAsync(request.OwnerId);
+            if (owner == null)
+            {
+                return BadRequest("Owner doesn't exists.");
+            }
+
+            var pet = await _dataContext.Pets.FindAsync(request.PetId);
+            if (pet == null)
+            {
+                return BadRequest("Pet doesn't exists.");
+            }
+
+            agenda.IsAvailable = false;
+            agenda.Remarks = request.Remarks;
+            agenda.Owner = owner;
+            agenda.Pet = pet;
+
+            _dataContext.Agendas.Update(agenda);
+            await _dataContext.SaveChangesAsync();
+            return Ok(true);
+        }
+
+        [HttpPost]
+        [Route("UnAssignAgenda")]
+        public async Task<IActionResult> UnAssignAgenda(UnAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var agenda = await _dataContext.Agendas
+                .Include(a => a.Owner)
+                .Include(a => a.Pet)
+                .FirstOrDefaultAsync(a => a.Id == request.AgendaId);
+            if (agenda == null)
+            {
+                return BadRequest("Agenda doesn't exists.");
+            }
+
+            if (agenda.IsAvailable)
+            {
+                return BadRequest("Agenda is available.");
+            }
+
+            agenda.IsAvailable = true;
+            agenda.Remarks = null;
+            agenda.Owner = null;
+            agenda.Pet = null;
+
+            _dataContext.Agendas.Update(agenda);
+            await _dataContext.SaveChangesAsync();
+            return Ok(agenda);
+        }
+
+
     }
 }
