@@ -1,4 +1,6 @@
-﻿using MyVet.Common.Models;
+﻿using MyVet.Common.Helpers;
+using MyVet.Common.Models;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -21,6 +23,7 @@ namespace MyVet.Prism.ViewModels
         {
             Title = "Pets";
             _navigationService = navigationService;
+            LoadOwner();
         }
 
         public ObservableCollection<PetItemViewModel> Pets
@@ -29,26 +32,23 @@ namespace MyVet.Prism.ViewModels
             set => SetProperty(ref _pets, value);
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
+       
 
-            if(parameters.ContainsKey("owner"))
+        private void LoadOwner()
+        {
+            _owner = JsonConvert.DeserializeObject<OwnerResponse>(Settings.Owner);
+            Title = $"Pets of: {_owner.FullName}";
+            Pets = new ObservableCollection<PetItemViewModel>(_owner.Pets.Select(p => new PetItemViewModel(_navigationService)
             {
-                _owner = parameters.GetValue<OwnerResponse>("owner");
-                Title = $"Pets of: {_owner.FullName}";
-                Pets = new ObservableCollection<PetItemViewModel>(_owner.Pets.Select(p => new PetItemViewModel(_navigationService)
-                {
-                    Born = p.Born,
-                    Histories = p.Histories,
-                    Id = p.Id,
-                    ImageUrl = p.ImageUrl,
-                    Name = p.Name,
-                    PetType = p.PetType,
-                    Race = p.Race,
-                    Remarks = p.Remarks
-                }).ToList());
-            }
+                Born = p.Born,
+                Histories = p.Histories,
+                Id = p.Id,
+                ImageUrl = p.ImageUrl,
+                Name = p.Name,
+                PetType = p.PetType,
+                Race = p.Race,
+                Remarks = p.Remarks
+            }).ToList());
         }
     }
 }
