@@ -132,6 +132,7 @@ namespace MyVet.Prism.ViewModels
 
             Settings.Owner = JsonConvert.SerializeObject(owner);
             Settings.Token = JsonConvert.SerializeObject(token);
+            Settings.IsRemembered = IsRemember;
 
 
             

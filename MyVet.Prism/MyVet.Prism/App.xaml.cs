@@ -5,6 +5,10 @@ using MyVet.Prism.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using MyVet.Common.Services;
+using MyVet.Common.Helpers;
+using MyVet.Common.Models;
+using Newtonsoft.Json;
+using System;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MyVet.Prism
@@ -23,10 +27,18 @@ namespace MyVet.Prism
         protected override async void OnInitialized()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTUyMzA4QDMxMzcyZTMzMmUzMFRJOENpWXhsL2JCeHFic1VUZWxIQmpoVlhiTTRnYnRod1FvbUsyU2l4TTQ9");
-
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
+            var token = JsonConvert.DeserializeObject<TokenResponse>(Settings.Token);
+            if (Settings.IsRemembered && token?.Expiration > DateTime.Now)
+            {
+                await NavigationService.NavigateAsync("/VeterinaryMasterDetailPage/NavigationPage/PetsPage");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync("/NavigationPage/LoginPage");
+            }
+
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
