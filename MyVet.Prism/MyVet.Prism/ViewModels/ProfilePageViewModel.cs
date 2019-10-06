@@ -14,11 +14,13 @@ namespace MyVet.Prism.ViewModels
 {
 	public class ProfilePageViewModel : ViewModelBase
 	{
+        private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
         private bool _isRunning;
         private bool _isEnabled;
         private OwnerResponse _owner;
         private DelegateCommand _saveCommand;
+        private DelegateCommand _changePasswordCommand;
 
         public ProfilePageViewModel(
             INavigationService navigationService,
@@ -27,8 +29,11 @@ namespace MyVet.Prism.ViewModels
             Title = "Profile";
             IsEnabled = true;
             Owner = JsonConvert.DeserializeObject<OwnerResponse>(Settings.Owner);
+            _navigationService = navigationService;
             _apiService = apiService;
         }
+
+        public DelegateCommand ChangePasswordCommand => _changePasswordCommand ?? (_changePasswordCommand = new DelegateCommand(ChangePassword));
 
         public DelegateCommand SaveCommand => _saveCommand ?? (_saveCommand = new DelegateCommand(Save));
 
@@ -133,6 +138,12 @@ namespace MyVet.Prism.ViewModels
 
             return true;
         }
+
+        private async void ChangePassword()
+        {
+            await _navigationService.NavigateAsync("ChangePasswordPage");
+        }
+
     }
 
 }
