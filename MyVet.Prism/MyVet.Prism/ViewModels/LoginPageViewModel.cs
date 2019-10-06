@@ -19,20 +19,23 @@ namespace MyVet.Prism.ViewModels
         private bool _isRunning;
         private bool _isEnabled;
         private DelegateCommand _loginCommand;
+        private DelegateCommand _registerCommand;
         public LoginPageViewModel(INavigationService navigationService, IApiService apiService) : base(navigationService)
         {
             Title = "Login";
             IsEnabled = true;
             _navigationService = navigationService;
             _apiService = apiService;
+            IsRemember = true;
 
 
-            //TODO: Delete this line
-            Email = "jzuluaga55@hotmail.com";
-            Password = "123456";
         }
 
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(Login));
+
+        public DelegateCommand RegisterCommand => _registerCommand ?? (_registerCommand = new DelegateCommand(Register));
+
+        public bool IsRemember { get; set; }
 
         public string Email { get; set; }
 
@@ -136,6 +139,11 @@ namespace MyVet.Prism.ViewModels
             Password = string.Empty;
 
 
+        }
+
+        private async void Register()
+        {
+            await _navigationService.NavigateAsync("RegisterPage");
         }
     }
 }

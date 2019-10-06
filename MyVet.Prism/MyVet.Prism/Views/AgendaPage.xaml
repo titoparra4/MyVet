@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyVet.Prism.Views.AgendaPage"
+             BackgroundColor="{StaticResource colorBackgroud}"
              Title="{Binding Title}">
   
 </ContentPage>
