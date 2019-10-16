@@ -72,5 +72,41 @@ namespace MyVet.Web.Controllers.API
 
             return Ok(response);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetOwners()
+        {
+            var owners = await _dataContext.Owners
+                .Include(o => o.User)
+                .Include(o => o.Pets)
+                .ThenInclude(p => p.PetType)
+                .ToListAsync();
+
+            var response = new List<OwnerResponse>(owners.Select(o => new OwnerResponse
+            {
+                Id = o.Id,
+                Latitude = o.User.Latitude,
+                Longitude = o.User.Longitude,
+                FirstName = o.User.FirstName,
+                LastName = o.User.LastName,
+                Address = o.User.Address,
+                Document = o.User.Document,
+                Email = o.User.Email,
+                PhoneNumber = o.User.PhoneNumber,
+                Pets = o.Pets.Select(p => new PetResponse
+                {
+                    Born = p.Born,
+                    Id = p.Id,
+                    ImageUrl = p.ImageFullPath,
+                    Name = p.Name,
+                    Race = p.Race,
+                    Remarks = p.Remarks,
+                    PetType = p.PetType.Name
+                }).ToList()
+            }).ToList());
+
+            return Ok(response);
+        }
+
     }
 }
