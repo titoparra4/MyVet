@@ -165,6 +165,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator.IOS">
       <Version>17.3.0.14</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Geolocator">
+      <Version>4.5.0.6</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugin.Media">
       <Version>4.0.1.5</Version>
     </PackageReference>
@@ -173,6 +176,9 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.848062" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1367" />
+    <PackageReference Include="Xamarin.Forms.Maps">
+      <Version>4.2.0.848062</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyVet.Prism\MyVet.Prism.csproj">

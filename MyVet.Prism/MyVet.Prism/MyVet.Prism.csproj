@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.3.0.14" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.848062" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1367" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="4.2.0.848062" />
   </ItemGroup>
 
   <ItemGroup>
