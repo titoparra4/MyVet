@@ -55,7 +55,23 @@ namespace MyVet.Common.Services
         string controller,
         string tokenType,
         string accessToken);
-        
+
+        Task<Response<object>> PostAsync<T>(
+        string urlBase,
+        string servicePrefix,
+        string controller,
+        T model,
+        string tokenType,
+        string accessToken);
+
+        Task<Response<object>> PutAsync<T>(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            int id,
+            T model,
+            string tokenType,
+            string accessToken);
 
     }
 }

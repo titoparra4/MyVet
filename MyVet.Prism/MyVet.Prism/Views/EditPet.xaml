@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:i18n="clr-namespace:MyVet.Prism.Helpers"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyVet.Prism.Views.EditPet"
@@ -14,7 +15,7 @@
         <ScrollView>
             <AbsoluteLayout>
                 <StackLayout
-                                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"
             	    AbsoluteLayout.LayoutFlags="All">
 
                     <ffimageloading:CachedImage
@@ -34,7 +35,7 @@
                     <Label
             	    FontSize="Micro"
             	    HorizontalOptions="Center"
-            	    Text="Tap on image to charge it."/>
+            	    Text="{i18n:Translate ChangeImage}"/>
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -52,29 +53,29 @@
                         <Label
                 	    Grid.Column="0"
                 	    Grid.Row="0"
-                	    Text="Name"
+                	    Text="{i18n:Translate Name}"
                 	    VerticalOptions="Center"/>
                         <Entry
                 	    Grid.Column="1"
                 	    Grid.Row="0"
-                	    Placeholder="Enter de pet's name..."
+                	    Placeholder="{i18n:Translate NamePlaceHolder}"
                 	    Text="{Binding Pet.Name}"/>
 
                         <Label
                 	    Grid.Column="0"
                 	    Grid.Row="1"
-                	    Text="Race"
+                	    Text="{i18n:Translate Race}"
                 	    VerticalOptions="Center"/>
                         <Entry
                 	    Grid.Column="1"
                 	    Grid.Row="1"
-                	    Placeholder="Enter de pet's race..."
+                	    Placeholder="{i18n:Translate RacePlaceHolder}"
                 	    Text="{Binding Pet.Race}"/>
 
                         <Label
                 	    Grid.Column="0"
                 	    Grid.Row="2"
-                	    Text="Pet Type"
+                	    Text="{i18n:Translate PetType}"
                 	    VerticalOptions="Center"/>
                         <Picker
                 	    Grid.Column="1"
@@ -87,7 +88,7 @@
                         <Label
                 	    Grid.Column="0"
                 	    Grid.Row="3"
-                	    Text="Born"
+                	    Text="{i18n:Translate Born}"
                 	    VerticalOptions="Center"/>
                         <DatePicker
                 	    Grid.Column="1"
@@ -97,7 +98,7 @@
                         <Label
                 	    Grid.Column="0"
                 	    Grid.Row="4"
-                	    Text="Remarks"
+                	    Text="{i18n:Translate Remarks}"
                 	    VerticalOptions="Center"/>
                         <Editor
                 	    Grid.Column="1"
@@ -116,12 +117,13 @@
                 	    HorizontalOptions="Center"
                 	    TextColor="{StaticResource colorFontInverse}"
                 	    IsVisible="{Binding IsRunning}"
-                	    Title="Saving..."
+                	    Title="{i18n:Translate Saving}"
                 	    VerticalOptions="Center"
                 	    ViewBoxWidth="80"
                 	    ViewBoxHeight="80" />
+                
             </AbsoluteLayout>
-
+                
         </ScrollView>
         <StackLayout
             	    Orientation="Horizontal"
@@ -130,14 +132,14 @@
             <Button
                 	    Command="{Binding SaveCommand}"
                 	    IsEnabled="{Binding IsEnabled}"
-                	    Text="Save"/>
+                	    Text="{i18n:Translate Save}"/>
 
             <Button
                 	    Command="{Binding DeleteCommand}"
                 	    IsEnabled="{Binding IsEnabled}"
                 	    IsVisible="{Binding IsEdit}"
                 	    Style="{StaticResource dangerButton}"
-                	    Text="Delete"/>
+                	    Text="{i18n:Translate Delete}"/>
         </StackLayout>
     </StackLayout> 
 

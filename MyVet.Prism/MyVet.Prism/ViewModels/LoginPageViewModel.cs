@@ -1,6 +1,7 @@
 ﻿using MyVet.Common.Helpers;
 using MyVet.Common.Models;
 using MyVet.Common.Services;
+using MyVet.Prism.Helpers;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -23,7 +24,7 @@ namespace MyVet.Prism.ViewModels
         private DelegateCommand _forgotPasswordCommand;
         public LoginPageViewModel(INavigationService navigationService, IApiService apiService) : base(navigationService)
         {
-            Title = "Login";
+            Title = Languages.Login;
             IsEnabled = true;
             _navigationService = navigationService;
             _apiService = apiService;
@@ -66,12 +67,12 @@ namespace MyVet.Prism.ViewModels
         {
             if (string.IsNullOrEmpty(Email))
             {
-                await App.Current.MainPage.DisplayAlert("Error", "You must enter an email.", "Accept");
+                await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.EmailError, Languages.Accept);
                 return;
             }
             if (string.IsNullOrEmpty(Password))
             {
-                await App.Current.MainPage.DisplayAlert("Error", "You must enter a password.", "Accept");
+                await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.PasswordError, Languages.Accept);
                 return;
             }
 
@@ -104,7 +105,7 @@ namespace MyVet.Prism.ViewModels
             {
                 IsEnabled = true;
                 IsRunning = false;
-                await App.Current.MainPage.DisplayAlert("Error", "User or password incorrect.", "Accept");
+                await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.LoginError, Languages.Accept);
                 Password = string.Empty;
                 return;
             }
