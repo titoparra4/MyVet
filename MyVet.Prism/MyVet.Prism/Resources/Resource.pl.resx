@@ -219,4 +219,16 @@
   <data name="CreateEditPetConfirm" xml:space="preserve">
     <value>Zwierzakowi udało się {0}.!</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Potwierdzanie</value>
+  </data>
+  <data name="QuestionToDeletePet" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć XXXX.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Tak</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nie</value>
+  </data>
 </root>

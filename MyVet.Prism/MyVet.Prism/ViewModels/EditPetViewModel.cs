@@ -30,6 +30,7 @@ namespace MyVet.Prism.ViewModels
         private MediaFile _file;
         private DelegateCommand _changeImageCommand;
         private DelegateCommand _saveCommand;
+        private DelegateCommand _deleteCommand;
 
 
 
@@ -41,6 +42,8 @@ namespace MyVet.Prism.ViewModels
             _apiService = apiService;
         }
 
+
+        public DelegateCommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new DelegateCommand(DeleteAsync));
         public DelegateCommand SaveCommand => _saveCommand ?? (_saveCommand = new DelegateCommand(SaveAsync));
 
         public DelegateCommand ChangeImageCommand => _changeImageCommand ?? (_changeImageCommand = new DelegateCommand(ChangeImageAsync));
@@ -275,6 +278,41 @@ namespace MyVet.Prism.ViewModels
             }
 
             return true;
+        }
+
+        private async void DeleteAsync()
+        {
+            var answer = await App.Current.MainPage.DisplayAlert(
+                Languages.Confirm,
+                Languages.QuestionToDeletePet,
+                Languages.Yes,
+                Languages.No);
+
+            if (!answer)
+            {
+                return;
+            }
+
+            IsRunning = true;
+            IsEnabled = false;
+
+            var url = App.Current.Resources["UrlAPI"].ToString();
+            var token = JsonConvert.DeserializeObject<TokenResponse>(Settings.Token);
+            var response = await _apiService.DeleteAsync(url, "/api", "/Pets", Pet.Id, "bearer", token.Token);
+
+            if (!response.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await App.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Accept);
+                return;
+            }
+
+            await PetsPageViewModel.GetInstance().UpdateOwnerAsync();
+
+            IsRunning = false;
+            IsEnabled = true;
+            await _navigationService.GoBackToRootAsync();
         }
 
 

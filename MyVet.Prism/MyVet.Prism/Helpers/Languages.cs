@@ -79,6 +79,15 @@ namespace MyVet.Prism.Helpers
 
         public static string Edited => Resource.Edited;
 
+        public static string Confirm => Resource.Confirm;
+
+        public static string QuestionToDeletePet => Resource.QuestionToDeletePet;
+
+        public static string Yes => Resource.Yes;
+
+        public static string No => Resource.No;
+
+
     }
 }
 
