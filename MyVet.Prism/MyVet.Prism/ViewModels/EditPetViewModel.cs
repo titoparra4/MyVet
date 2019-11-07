@@ -250,6 +250,7 @@ namespace MyVet.Prism.ViewModels
                 string.Format(Languages.CreateEditPetConfirm, IsEdit ? Languages.Edited : Languages.Created),
                 Languages.Accept);
 
+            await PetsPageViewModel.GetInstance().UpdateOwnerAsync();
             await _navigationService.GoBackToRootAsync();
         }
 
