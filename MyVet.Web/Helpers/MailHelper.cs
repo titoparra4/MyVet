@@ -21,8 +21,8 @@ namespace MyVet.Web.Helpers
             var password = _configuration["Mail:Password"];
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(from));
-            message.To.Add(new MailboxAddress(to));
+            message.From.Add(MailboxAddress.Parse(from));
+            message.To.Add(MailboxAddress.Parse(to));
             message.Subject = subject;
             var bodyBuilder = new BodyBuilder
             {
